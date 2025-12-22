@@ -1,9 +1,11 @@
-# sorting_components_benchmark_paper
+# Community-based spike sorting with flexible components: the more the merrier
 
 Here python scripts and jupyter notebooks to reproduces figures from the paper :
 
 **Community-based spike sorting with flexible components: the more the merrier**
 
+Theses scripts and notebooks are a goood examples for using the internal benchmarks from
+spikeinterface.
 
 
 Figure 2 can be reproduce using:
