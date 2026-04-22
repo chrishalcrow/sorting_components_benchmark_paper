@@ -1,10 +1,13 @@
-# Community-based spike sorting with flexible components: the more the merrier
+# Opening the black box: a modular approach to spike sorting
 
 Here python scripts and jupyter notebooks to reproduces figures from the paper :
 
-**Community-based spike sorting with flexible components: the more the merrier**
+**Opening the black box: a modular approach to spike sorting**
 
-Theses scripts and notebooks are a goood examples for using the internal benchmarks from
+https://elifesciences.org/reviewed-preprints/110588v1
+
+
+Theses scripts and notebooks are good examples for using the internal benchmarks from
 spikeinterface.
 
 
