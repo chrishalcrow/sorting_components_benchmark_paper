@@ -18,33 +18,42 @@ def preprocess(rec):
     rec = bandpass_filter(rec, freq_min=150., freq_max=9000., ftype="bessel", dtype='float32', margin_ms=35.)
     return rec
 
-def run_study(study_folder, dataset_name, erase=True):
+def run_study(study_folder, erase=True):
     si.set_global_job_kwargs(n_jobs=0.8, pool_engine='process', chunk_duration="0.2s")
     
     study_folder = Path(study_folder)
 
-    seeds = [ 2205, 2406, 2308, 1110, 2512]
-    # seeds = [ 2205,  ]
-
     datasets = {}
-    for s, seed in enumerate(seeds):
-        static, drifting, sorting, analyzer_static, analyzer_drifting = get_dataset(dataset_name, seed=seed)
+
+    dataset_names = [
+        'cambridgeneurotech#ASSY-158-H5_140_1800.s',
+        'Neuropixels2-128_250_1800.s',
+        'sinaps-128_250_1800s',
+        'tetrode_10_1800.s',
+    ] 
+
+    for dataset_name in dataset_names:
+        static, drifting, sorting, analyzer_static, analyzer_drifting = get_dataset(dataset_name, seed=2205)
 
         static = preprocess(static)
         drifting = preprocess(drifting)
 
-        datasets[f"static_{s}"] = (static, sorting)
-        datasets[f"drifting_{s}"] = (drifting, sorting)
+        datasets[f"static_{dataset_name}"] = (static, sorting)
+        datasets[f"drifting_{dataset_name}"] = (drifting, sorting)
 
     cases = {}
-    for s, seed in enumerate(seeds):
+    for dataset_name in dataset_names:
+
         for motion_case in ["static", "drifting"]:
 
-            data_name = f"{motion_case}_{s}"
+            if dataset_name.startswith('tetrode') and motion_case == 'drifting':
+                continue
+
+            data_name = f"{motion_case}_{dataset_name}"
 
             is_drifting = (motion_case == 'drifting')
 
-            case_key = ('kilosort4', motion_case, f"{s}")
+            case_key = ('kilosort4', motion_case, f"{dataset_name}")
             cases[case_key] = {
                     "label": f"kilosort4 {data_name}",
                     "dataset": data_name,
@@ -53,16 +62,7 @@ def run_study(study_folder, dataset_name, erase=True):
             cases[case_key]["params"]["do_correction"] = is_drifting
             cases[case_key]["params"]["verbose"] = True
 
-            # case_key = ('kilosort4like', motion_case, f"{s}")
-            # cases[case_key] = {
-            #         "label": f"kilosort4like {data_name}",
-            #         "dataset": data_name,
-            #         "params": {"sorter_name": "kilosort4like"},
-            # }
-            # cases[case_key]["params"]["apply_motion_correction"] = is_drifting
-            # cases[case_key]["params"]["verbose"] = True
-
-            case_key = ('tridesclous2', motion_case, f"{s}")
+            case_key = ('tridesclous2', motion_case, f"{dataset_name}")
             cases[case_key] = {
                     "label": f"tridesclous2 {data_name}",
                     "dataset": data_name,
@@ -72,7 +72,7 @@ def run_study(study_folder, dataset_name, erase=True):
             cases[case_key]["params"]["verbose"] = True
             
 
-            case_key = ('spykingcircus2', motion_case, f"{s}")
+            case_key = ('spykingcircus2', motion_case, f"{dataset_name}")
             cases[case_key] = {
                     "label": f"spykingcircus2 {data_name}",
                     "dataset": data_name,
@@ -82,12 +82,14 @@ def run_study(study_folder, dataset_name, erase=True):
             cases[case_key]["params"]["apply_motion_correction"] = is_drifting
             cases[case_key]["params"]["verbose"] = True
 
-            case_key = ('lupin', motion_case, f"{s}")
+            case_key = ('lupin', motion_case, f"{dataset_name}")
             cases[case_key] = {
                     "label": f"lupin {data_name}",
                     "dataset": data_name,
                     "params": {
-                        "sorter_name": "lupin"},
+                        "sorter_name": "lupin",
+                        "template_matching_engine": "wobble",
+                        },
                 }
             cases[case_key]["params"]["apply_motion_correction"] = is_drifting
             cases[case_key]["params"]["verbose"] = True
@@ -106,16 +108,11 @@ def run_study(study_folder, dataset_name, erase=True):
 
 
 if __name__ == "__main__":
-    global_name = 'sorters_simulation'
+    global_name = 'sorters_simulation_other_probes'
 
-    # dataset_name = 'Neuronexus-32_50_300.s'
-    # dataset_name = 'Neuropixels1-128_250_100.s'
-    # dataset_name = 'Neuropixels1-384_500_600.s'
-    dataset_name = 'Neuropixels1-384_500_1800.s'
+    study_folder = base_path / global_name /  'study'
 
-    study_folder = base_path / global_name / dataset_name / 'study'
-
-    # run_study(study_folder, dataset_name, erase=True)
+    run_study(study_folder, erase=True)
 
 
     # push_to_slurm(run_study,  study_folder,  dataset_name, erase=True,
@@ -123,16 +120,17 @@ if __name__ == "__main__":
     #               block_mode=True,
     #               )
     
-    study = SorterStudy(study_folder)
-    print(study)
-    si.set_global_job_kwargs(n_jobs=0.8, pool_engine='process', chunk_duration="0.2s")
-    some_cases = [k for k in study.cases.keys() if k[0] == 'lupin']
-    print(some_cases)
+    # study = SorterStudy(study_folder)
+    # print(study)
+    # si.set_global_job_kwargs(n_jobs=0.8, pool_engine='process', chunk_duration="0.2s")
+    # some_cases = [k for k in study.cases.keys() if k[0] == 'lupin']
+    # some_cases = [k for k in study.cases.keys() if 'Neuropixels' in k[2]]
+    # print(some_cases)
 
 
-    study.run(case_keys=some_cases, keep=False, verbose=True)
+    # study.run(case_keys=some_cases, keep=False, verbose=True)
     # study.run(case_keys=None, keep=True, verbose=True)
 
-    study.compute_results()
-    study.compute_metrics()
+    # study.compute_results()
+    # study.compute_metrics()
 

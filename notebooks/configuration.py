@@ -5,16 +5,18 @@ import sys
 import spikeinterface.full as si
 
 if getpass.getuser() == 'samuel' and sys.platform.startswith('linux'):
-    base_path = Path('/home/samuel/DataSpikeSorting/data_study_components_paper')
+    base_path = Path('/home/samuel/DataSpikeSorting/data_study_components_paper_v2')
     lussac_data_path = None
     kilosort4_data_path = None
     kilosort2_5_path = None
 
 elif getpass.getuser() == 'samuel.garcia' and sys.platform.startswith('linux'):
-    base_path = Path('/mnt/data/sam/DataSpikeSorting/data_study_components_paper')
+    base_path = Path('/mnt/data/sam/DataSpikeSorting/data_study_components_paper_v2')
     lussac_data_path = Path('/mnt/data/sam/DataSpikeSorting/lussac_dataset')
     kilosort4_data_path = Path('/mnt/data/sam/DataSpikeSorting/DataKilosort4/')
     kilosort2_5_path = '/home/samuel.garcia/Documents/SpikeInterface/code_sorters/Kilosort2.5/'
+    figure_folder = Path('/home/samuel.garcia/figures_paper_mars2026')
+
 
 elif getpass.getuser() == 'pierre' and sys.platform.startswith('linux'):
     base_path = Path('/home/pierre/edimbourgh_laptop')
@@ -27,3 +29,6 @@ elif getpass.getuser() == 'cure' and sys.platform.startswith('linux'):
     lussac_data_path = None
     kilosort4_data_path = None
     kilosort2_5_path = None
+
+
+figure_folder.mkdir(exist_ok=True)

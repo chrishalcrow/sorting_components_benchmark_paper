@@ -242,13 +242,26 @@ if __name__ == "__main__":
     global_name = 'matching_drift_aware'
     # dataset_name = 'Neuronexus-32_50_300.s'
     # dataset_name = 'Neuropixels1-128_250_100.s'
-    dataset_name = 'Neuropixels1-384_500_600.s'
+    # dataset_name = 'Neuropixels1-384_500_600.s'
+    dataset_name = 'Neuropixels1-384_500_1800.s'
 
     motion_folder = base_path / global_name / dataset_name / 'motion'
     study_folder = base_path / global_name / dataset_name / 'study'
 
 
-    run_study(motion_folder, study_folder, dataset_name, erase=True)
+    # run_study(motion_folder, study_folder, dataset_name, erase=True)
 
     # push_to_slurm(run_study, motion_folder, study_folder,  dataset_name, erase=True)
 
+
+    si.set_global_job_kwargs(n_jobs=20, chunk_duration="1s")
+    study = MatchingStudy(study_folder)
+    print(study)
+    # study.run(case_keys=None, keep=True, verbose=True)
+
+    some_cases = ['drifting_interploated', 'drifting_GT']
+    study.run(case_keys=some_cases, keep=False, verbose=True)
+
+
+    study.compute_results()
+    study.compute_metrics()

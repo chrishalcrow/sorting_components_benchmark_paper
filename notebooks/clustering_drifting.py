@@ -117,7 +117,8 @@ if __name__ == "__main__":
     # dataset_name = 'Neuronexus-32_50_300.s'
     # dataset_name = 'Neuropixels1-128_250_100.s'
     # dataset_name = 'Neuropixels1-384_500_600.s'
-    dataset_name = 'Neuropixels1-384_500_600.s'
+    # dataset_name = 'Neuropixels1-384_500_600.s'
+    dataset_name = 'Neuropixels1-384_500_1800.s'
 
     motion_folder = base_path / global_name / dataset_name / 'motion'
     study_folder = base_path / global_name / dataset_name / 'study'

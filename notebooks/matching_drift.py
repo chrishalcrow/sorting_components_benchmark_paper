@@ -137,7 +137,8 @@ if __name__ == "__main__":
 
     # dataset_name = 'Neuronexus-32_50_300.s'
     # dataset_name = 'Neuropixels1-128_250_100.s'
-    dataset_name = 'Neuropixels1-384_500_600.s'
+    # dataset_name = 'Neuropixels1-384_500_600.s'
+    dataset_name = 'Neuropixels1-384_500_1800.s'
 
     motion_folder = base_path / global_name / dataset_name / 'motion'
     study_folder = base_path / global_name / dataset_name / 'study'
@@ -146,3 +147,9 @@ if __name__ == "__main__":
     # push_to_slurm(run_study, motion_folder, study_folder,  dataset_name, erase=True)
 
 
+    # study = MatchingStudy(study_folder)
+    # print(study)
+    # si.set_global_job_kwargs(n_jobs=0.8, chunk_duration="0.2s") 
+
+    # study.run(case_keys=None, keep=True, verbose=True)
+    # study.compute_results()

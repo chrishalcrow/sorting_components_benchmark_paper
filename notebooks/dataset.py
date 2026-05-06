@@ -185,9 +185,9 @@ def get_dataset(dataset_name, with_extra_info=False, seed=None):
 
 
     else:
-        static_saved = si.load_extractor(static_rec_folder)
-        drifting_saved = si.load_extractor(drifting_rec_folder)
-        sorting_saved = si.load_extractor(sorting_folder)
+        static_saved = si.load(static_rec_folder)
+        drifting_saved = si.load(drifting_rec_folder)
+        sorting_saved = si.load(sorting_folder)
         analyzer_static = si.load_sorting_analyzer(static_analyzer_folder)
         analyzer_drifting = si.load_sorting_analyzer(drifting_analyzer_folder)
 
@@ -219,7 +219,21 @@ if __name__ == '__main__':
     si.set_global_job_kwargs(n_jobs=-2, progress_bar=True, chunk_duration='1s', pool_engine='process', mp_context="fork")
     # dataset_name = 'Neuronexus-32_50_300.s'
     # dataset_name = 'Neuropixels1-128_250_100.s'
-    dataset_name = 'Neuropixels1-384_500_600.s'
+    # dataset_name = 'Neuropixels1-384_500_600.s'
+    # dataset_name = 'Neuropixels1-384_500_1800.s'
 
-    get_dataset(dataset_name)
+    
+    # dataset_name = 'cambridgeneurotech#ASSY-37-H7b_50_1800.s'  # 32 chans
+    # dataset_name = 'tetrode_8_1800.s'
+    dataset_name = 'Neuropixels2-128_250_1800.s'
+
+    
+
+    # get_dataset(dataset_name)
     get_dataset(dataset_name, seed=2205)
+
+    # seeds = [ 2205, 2406, 2308, 1110, 2512]
+    # for seed in seeds:
+    #     get_dataset(dataset_name, seed=seed)
+
+
