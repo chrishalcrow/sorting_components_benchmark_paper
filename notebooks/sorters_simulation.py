@@ -87,7 +87,9 @@ def run_study(study_folder, dataset_name, erase=True):
                     "label": f"lupin {data_name}",
                     "dataset": data_name,
                     "params": {
-                        "sorter_name": "lupin"},
+                        "sorter_name": "lupin",
+                        "template_matching_engine": "wobble",
+                    },
                 }
             cases[case_key]["params"]["apply_motion_correction"] = is_drifting
             cases[case_key]["params"]["verbose"] = True
