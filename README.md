@@ -44,6 +44,17 @@ Figure 7 can be reproduce using:
   * `sorters_simulation.py` : run the script to create and compute the study
   * `sorters_simulation.ipynb` : plot the results
 
+Figure 8 can be reproduce using:
+
+  * TODO Chris
+  * TODO Chris
+
+
+Supplementary figure can be reproduce using::
+
+  * `sorters_simulation_other_probes.py` : run the script to create and compute the study
+  * `sorters_simulation_other_probes.ipynb` : plot the results
+
 
 Additional scripts:
 
