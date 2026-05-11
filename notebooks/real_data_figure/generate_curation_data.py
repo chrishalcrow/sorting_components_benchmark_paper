@@ -64,4 +64,10 @@ for dataset_name, protocols in dataset_protocols.items():
 
     results = pd.DataFrame(all_protocols_data, columns=["sorter", "total units", "bombcell good", "unitrefine sua", "bombcell mua", "unitrefine mua", "# slay merges", "bombcell noise", "unitrefine noise"], index=None)
 
-    results.to_csv(real_data_figure_folder / f"curation_results/{dataset_name}_results.csv", index=False)
+    results.to_csv(real_data_figure_folder / f"curation_results/{dataset_name}_results.csv", index=False)  
+
+    # render for typst rendering
+    for row in results.iterrows():
+        for cell in row[1]:
+            print(f"[{cell}], ", end="")
+        print("")
