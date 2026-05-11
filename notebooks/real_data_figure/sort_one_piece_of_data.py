@@ -43,9 +43,8 @@ protocols = {
     "lupin_no_motion_correction": {
         "preprocessing": {},
         "sorting": {
-            "sorter_name": "spykingcircus2",
+            "sorter_name": "lupin",
             "apply_motion_correction": False,
-            "cache_preprocessing": {"mode": "folder", "folder": "sk2_pre"},
         },
         "preprocessing_for_analyzer": {
             "bandpass_filter": {},
@@ -89,12 +88,11 @@ protocols = {
             "common_reference": {},
         },
     },
-    "lupin_no_motion_correction": {
+    "lupin_motion_correction": {
         "preprocessing": {},
         "sorting": {
-            "sorter_name": "spykingcircus2",
+            "sorter_name": "lupin",
             "apply_motion_correction": True,
-            "cache_preprocessing": {"mode": "folder", "folder": "sk2_pre"},
         },
         "preprocessing_for_analyzer": {
             "bandpass_filter": {},
