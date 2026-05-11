@@ -48,7 +48,6 @@ analyzers/
     ucl_spykingcircus2_no_motion_correction_analyzer
     ucl_tridesclous2_no_motion_correction_analyzer 
 
-
 """
 
 import spikeinterface.full as si
@@ -56,7 +55,7 @@ from pathlib import Path
 from sort_one_piece_of_data import do_sorting
 
 # edit this to point to the `sorting_components_benchmark_paper` on your own computer
-repo_folder = Path("/Users/christopherhalcrow/Work/fromgit/sorting_components_benchmark_paper/")
+repo_folder = Path("/home/nolanlab/fromgit/sorting_components_benchmark_paper/")
 
 raw_data_folder = repo_folder / "notebooks/real_data_figure/raw_data"
 analyzers_folder = repo_folder / "notebooks/real_data_figure/raw_data"
@@ -73,7 +72,7 @@ np1_analyzer_folders = [
     analyzers_folder / f"IBL_{protocol}_analyzer" for protocol in np1_protocols
 ]
 
-recording = si.read_nwb_recording(np1_data_folder)
+recording = si.read_nwb_recording(np1_data_folder, electrical_series_path = 'acquisition/ElectricalSeriesProbe00AP').frame_slice(start_frame=0, end_frame=30000*60)
 for protocol_name, analyzer_folder in zip(np1_protocols, np1_analyzer_folders):
     do_sorting(recording, analyzer_folder, protocol_name)
 
@@ -89,7 +88,7 @@ np2_analyzer_folders = [
     analyzers_folder / f"ucl_{protocol}_analyzer" for protocol in np1_protocols
 ]
 
-recording = si.read_cbin_ibl(np2_data_folder)
+recording = si.read_cbin_ibl(np2_data_folder).frame_slice(start_frame=0, end_frame=30000*60)
 for protocol_name, analyzer_folder in zip(np2_protocols, np2_analyzer_folders):
     do_sorting(recording, analyzer_folder, protocol_name)
 
